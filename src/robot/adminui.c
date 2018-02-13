@@ -54,6 +54,7 @@ void AdminUI_start(){
 
 	while(run){
 		display();
+		printf("test");
 
 		char input;
 		input = captureChoice();
