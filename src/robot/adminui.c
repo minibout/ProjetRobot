@@ -50,15 +50,33 @@ int captureChoice(void) {
 
 void AdminUI_start(){
 	run = 1;
-	SocketClient_connect();
+	int mySocket = SocketClient_connect();
 
 	while(run){
 		display();
-		printf("test");
 
 		char input;
 		input = captureChoice();
+
+		printf("you wrote %c \n", input);
 		SocketClient_write(input);
+
+		if(input == 'a'){
+			run = 0;
+		}else if(input == 'r'){
+			int speed;
+			int collision;
+			float luminosity;
+		  	read(mySocket, &speed, sizeof(speed));
+		  	read(mySocket, &collision, sizeof(collision));
+		  	read(mySocket, &luminosity, sizeof(luminosity));
+
+		  	printf("speed : %d\ncollision : %d\nluminosity : %f\n", speed, collision, luminosity);
+
+		}else if (input == 'e'){
+			printf("\e[1;1H\e[2J");
+		}
+
 	}
 }
 

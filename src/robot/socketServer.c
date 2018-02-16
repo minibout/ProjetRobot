@@ -56,8 +56,9 @@ void AdminUI_useCommande(char commande, int socket){
 
   case 'r':
   	pilotState = Pilot_getState();
-    write(socket, &pilotState, sizeof(pilotState));
-
+    write(socket, &pilotState.speed, sizeof(pilotState.speed));
+    write(socket, &pilotState.collision, sizeof(pilotState.collision));
+    write(socket, &pilotState.luminosity, sizeof(pilotState.luminosity));
   	break;
 
   case 'e':
@@ -71,11 +72,19 @@ void AdminUI_useCommande(char commande, int socket){
 void communication_avec_client(int socket)
 {
   char commande;
+  printf("Before read\n");
 
-  read(socket, &commande, sizeof(commande));
-  commande = ntohl(commande);
+  while(run){
+	  	read(socket, &commande, sizeof(commande));
 
-  //AdminUI_useCommande(commande, socket);
+		//commande = ntohl (commande);
+		printf("I have read this : ");
+
+		printf("%c\n",commande);
+
+		AdminUI_useCommande(commande, socket);
+  }
+
 
 
 }
@@ -96,19 +105,18 @@ void SocketServer_start()
 	bind(socket_ecoute, (struct sockaddr *)&mon_adresse, sizeof (mon_adresse));
 	/*Mise en ecoute du socket*/
 	listen(socket_ecoute, MAX_PENDING_CONNECTIONS);
-
-  printf("server start\n");
-  printf("%d, %d\n", socket_ecoute, socket_donnees);
+	printf("listen to connection\n");
 	while(1)
 	{
 		/*acceptation de la connexion*/
-    printf("while\n");
-		socket_donnees = accept(socket_ecoute, NULL, 0);
-    printf("connected to %d\n", socket_donnees);
+	socket_donnees = accept(socket_ecoute, NULL, 0);
+    printf("connected\n");
 
     Pilot_new();
+    Pilot_start();
 
 		if(fork() == 0){
+			printf("fork passed\n");
 			communication_avec_client(socket_donnees);
 		}
 	}

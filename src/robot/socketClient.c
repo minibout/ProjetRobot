@@ -10,7 +10,7 @@
 
 int mySocket;
 
-void SocketClient_connect(void)
+int SocketClient_connect(void)
 {
 	struct sockaddr_in adresse_du_serveur;
 
@@ -24,10 +24,8 @@ void SocketClient_connect(void)
 	adresse_du_serveur.sin_addr = *((struct in_addr *)gethostbyname("127.0.0.1")->h_addr_list[0]);
 	/*On demande la connexion aupres du serveur*/
 	connect(mySocket, (struct sockaddr *)&adresse_du_serveur, sizeof(adresse_du_serveur));
-	int test;
-	read (mySocket, &test, sizeof (test));
-
 	printf("connected\n");
+	return mySocket;
 
 }
 

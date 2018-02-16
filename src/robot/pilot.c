@@ -101,13 +101,10 @@ static void Pilot_performAction(TransitionAction anAction, VelocityVector vel){
 }
 
 static void Pilot_run(Event event, VelocityVector vel){
-  printf("pilotRun\n");
 	State aState;
 	TransitionAction anAction;
 	anAction = mySm[myState][event].action;
 	aState = mySm[myState][event].destinationState;
-  printf("%d state \n", aState);
-  printf("%d action \n", anAction);
 
 	if(aState != S_FORGET){
 		Pilot_performAction(anAction, vel);
