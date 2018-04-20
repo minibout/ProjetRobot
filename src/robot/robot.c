@@ -95,3 +95,13 @@ SensorState Robot_getSensorState()
 	sensorState.luminosity = (float)LightSensor_getStatus(robot->lightSensor);
 	return sensorState;
 }
+
+bool_e Robot_hasBumped(void)
+{
+  if (Robot_getSensorState().collision == BUMPED)
+  {
+    return TRUE;
+  } else {
+    return FALSE;
+  }
+}
