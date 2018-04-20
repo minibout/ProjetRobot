@@ -8,17 +8,23 @@
 #include <stdlib.h>
 
 typedef enum{
-  S_FORGET = 0,
-	S_IDLE,
+	S_IDLE = 0,
 	S_RUNNING,
-  S_STOP,
-  NB_STATE
+	S_WAITTING_BUMP,
+	S_DETECTION,
+	S_EMERGENCY,
+	NB_STATE
 }State;
 
 typedef enum{
   A_NOP = 0,
-  A_SEND_MVT,
-  A_SEND_MVT_NULL,
+  A_EVENT_STOPPED,
+  A_SET_ROBOT_VELOCITY,
+  A_BUMPED,
+  A_TO_BUMPED,
+  A_SET_BUMP,
+  A_TOGGLE_ES,
+  A_NOT_BUMPED,
   A_STOP
 }TransitionAction;
 
@@ -40,7 +46,6 @@ static Transition mySm[NB_STATE][NB_EVENT]={
   [S_RUNNING][E_CHECK_BUMPED] = {S_IDLE, A_SEND_MVT},
   [S_RUNNING][E_STOP] = {S_STOP, A_STOP},
   [S_IDLE][E_STOP] = {S_STOP, A_STOP},
-
 
 };
 static void Pilot_run(Event event, VelocityVector vel);
