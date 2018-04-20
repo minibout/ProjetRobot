@@ -2,7 +2,8 @@
 // a completer
 
 
-#include "adminui.h"
+#include "adminuiRemote.h"
+
 #include "prose.h"
 #include "socketClient.h"
 
