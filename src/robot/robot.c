@@ -65,7 +65,7 @@ void Robot_free(){
     free(robot);
 }
 
-void Robot_setVelocity(int mr,int ml)
+void Robot_setWeelsVelocity(int mr,int ml)
 {
 	
 	if(Motor_setCmd(robot->mL, ml) == -1){
