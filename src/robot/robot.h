@@ -103,7 +103,12 @@ extern SensorState Robot_getSensorState();
  * @param int mr : right's wheel power, value between -10O and 100
  * @param int ml : left's wheel power, value between -100 and 100
  */
-extern void Robot_setVelocity(int mr,int ml);
+extern void Robot_setWheelsVelocity(int mr,int ml);
+
+
+extern bool_e Robot_hasBumped();
+
+
 
 #endif /* ROBOT_H */
 

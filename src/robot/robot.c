@@ -65,7 +65,7 @@ void Robot_free(){
     free(robot);
 }
 
-void Robot_setVelocity(int mr,int ml)
+void Robot_setWeelsVelocity(int mr,int ml)
 {
 	
 	if(Motor_setCmd(robot->mL, ml) == -1){
@@ -94,4 +94,14 @@ SensorState Robot_getSensorState()
 	sensorState.collision = ContactSensor_getStatus(robot->contactSensor);
 	sensorState.luminosity = (float)LightSensor_getStatus(robot->lightSensor);
 	return sensorState;
+}
+
+bool_e Robot_hasBumped(void)
+{
+  if (Robot_getSensorState().collision == BUMPED)
+  {
+    return TRUE;
+  } else {
+    return FALSE;
+  }
 }
